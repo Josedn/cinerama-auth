@@ -1,2 +1,2 @@
 # cinerama-auth
-Subtitle service
+Authentication service

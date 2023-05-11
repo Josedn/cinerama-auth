@@ -1,4 +1,5 @@
 import { Request } from "express";
+import crypto from "crypto";
 import { LogLevel } from "./Logger";
 
 export const writeLineWithRequest = (line: string, req: Request, writeLine: (text: string, logLevel?: LogLevel) => void) => {
@@ -8,4 +9,8 @@ export const writeLineWithRequest = (line: string, req: Request, writeLine: (tex
     } else {
         writeLine(line + " with null address", LogLevel.Warning);
     }
+};
+
+export const getRandomToken = () => {
+    return crypto.randomBytes(20).toString('hex');
 };

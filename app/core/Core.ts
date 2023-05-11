@@ -4,21 +4,24 @@ import compress from "compression";
 import responseTime from "response-time";
 import ConfigManager from "../misc/ConfigManager";
 import Logger, { LogLevel } from "../misc/Logger";
-import SubsResource from "./resources/SubsResource";
+import AuthResource from "./resources/AuthResource";
+import { AuthService } from "./resources/services/AuthService";
 
 const writeLine = Logger.generateLogger("Core");
 
 export default class Core {
     private app: Express.Application;
+    private authService: AuthService;
 
     constructor(private configManager: ConfigManager) {
         this.app = Express();
+        this.authService = new AuthService();
     }
 
     public async initialize(): Promise<void> {
-        const torrentResource = new SubsResource();
+        const defaultResource = new AuthResource(this.authService);
         await this.initializeExpress(this.configManager.getApiPort());
-        torrentResource.initialize(this.app);
+        defaultResource.initialize(this.app);
     }
 
     private initializeExpress(apiPort: number): Promise<void> {
