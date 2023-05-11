@@ -13,22 +13,31 @@ export default class AuthResource {
 
     public initialize(app: Application): void {
         app.post("/login", this.postLogin);
+        app.get("/verify/:token", this.verifyAccount);
         app.get("*", this.get404);
     }
 
     private postLogin = (req: Request, res: Response, next: NextFunction): void => {
-
         const { username, password } = req.body;
 
         writeLineWithRequest("Requested login from " + username, req, writeLine);
-
 
         this.authService.login(username, password).then(either => either.toPromise())
             .then(authTokenE => {
                 res.status(HttpConstants.HTTP_STATUS_CREATED).json(authTokenE);
             })
-            .catch(err => this.sendError(res, CineError.NOT_AUTHORIZED, err));
-        this.sendError(res, CineError.PAGE_NOT_FOUND);
+            .catch(err => this.sendError(res, err));
+    }
+
+    private verifyAccount = (req: Request, res: Response, next: NextFunction): void => {
+        const { token } = req.params;
+        writeLineWithRequest("Requested verify from " + token, req, writeLine);
+
+        this.authService.verify(token).then(either => either.toPromise())
+            .then(allowedFlags => {
+                res.status(HttpConstants.HTTP_STATUS_CREATED).json(allowedFlags);
+            })
+            .catch(err => this.sendError(res, err));
     }
 
     private get404 = (req: Request, res: Response, next: NextFunction): void => {
