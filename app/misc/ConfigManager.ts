@@ -13,8 +13,13 @@ export default class ConfigManager {
     }
 
     public getApiPort(): number {
-        return this.getInt(ConfigKeys.API_PORT, 1232);
-    } 
+        return this.getInt(ConfigKeys.API_PORT, 1233);
+    }
+    
+
+    public getEnabledAccounts(): string[] {
+        return this.getString(ConfigKeys.ENABLED_ACCOUNTS, "").split(",").map(str => str.trim());
+    }
 
     private static getKeyString(key: ConfigKeys): string {
         return ConfigKeys[key];

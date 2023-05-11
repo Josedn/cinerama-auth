@@ -4,12 +4,14 @@ import { constants as HttpConstants } from "http2";
 import Logger from "../../misc/Logger";
 import { writeLineWithRequest } from "../../misc/Utils";
 import { CineError } from "./CineError";
-import { AuthService } from "./services/AuthService";
+import { AuthService } from "../services/AuthService";
+import { AccountService } from "../services/AccountService";
+import { AccountFlags } from "../services/AccountFlags";
 
 const writeLine = Logger.generateLogger("LightsResource");
 
 export default class AuthResource {
-    constructor(private authService: AuthService) { }
+    constructor(private authService: AuthService, private accountService: AccountService) { }
 
     public initialize(app: Application): void {
         app.post("/login", this.postLogin);
@@ -30,6 +32,10 @@ export default class AuthResource {
     }
 
     private verifyAccount = (req: Request, res: Response, next: NextFunction): void => {
+        if (!this.accountService.requestHasFlag(req, AccountFlags.GET_ALL_STREAMS)) {
+            this.sendError(res, CineError.NOT_AUTHORIZED);
+            return;
+        }
         const { token } = req.params;
         writeLineWithRequest("Requested verify from " + token, req, writeLine);
 
