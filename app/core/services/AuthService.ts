@@ -2,7 +2,7 @@ import { Either as EitherType } from "jazzi/dist/Either/types";
 import { Either } from "jazzi";
 import { getRandomToken } from "../../misc/Utils";
 import { AccountFlags } from "./AccountFlags";
-import { CineError } from "../resources/CineError";
+import { CineError } from "cinerama-common/lib/protocol";
 
 class TwoWayMap<K, V> {
     private map = new Map<K, V>();

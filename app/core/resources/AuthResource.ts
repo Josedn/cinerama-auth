@@ -3,10 +3,10 @@ import { constants as HttpConstants } from "http2";
 
 import Logger from "../../misc/Logger";
 import { writeLineWithRequest } from "../../misc/Utils";
-import { CineError } from "./CineError";
 import { AuthService } from "../services/AuthService";
 import { AccountService } from "../services/AccountService";
 import { AccountFlags } from "../services/AccountFlags";
+import { CineError } from "cinerama-common/lib/protocol";
 
 const writeLine = Logger.generateLogger("LightsResource");
 
