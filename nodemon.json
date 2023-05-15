@@ -5,7 +5,7 @@
         "node_modules"
     ],
     "watch": [
-        "app"
+        "src"
     ],
     "exec": "npm start",
     "ext": "ts"
