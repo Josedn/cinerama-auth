@@ -1,7 +1,7 @@
 import { Request } from "express";
 
 import Logger, { LogLevel } from "cinerama-common/lib/misc/Logger";
-import { AccountFlags } from "./AccountFlags";
+import { AccountFlags } from "cinerama-common/lib/protocol";
 
 const writeLine = Logger.generateLogger("AccountService");
 

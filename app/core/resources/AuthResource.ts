@@ -5,8 +5,7 @@ import Logger from "cinerama-common/lib/misc/Logger";
 import { writeLineWithRequest } from "cinerama-common/lib/misc/Utils";
 import { AuthService } from "../services/AuthService";
 import { AccountService } from "../services/AccountService";
-import { AccountFlags } from "../services/AccountFlags";
-import { CineError } from "cinerama-common/lib/protocol";
+import { CineError, AccountFlags } from "cinerama-common/lib/protocol";
 
 const writeLine = Logger.generateLogger("LightsResource");
 
