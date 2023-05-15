@@ -1,8 +1,8 @@
 import { Application, Request, Response, NextFunction } from "express";
 import { constants as HttpConstants } from "http2";
 
-import Logger from "../../misc/Logger";
-import { writeLineWithRequest } from "../../misc/Utils";
+import Logger from "cinerama-common/lib/misc/Logger";
+import { writeLineWithRequest } from "cinerama-common/lib/misc/Utils";
 import { AuthService } from "../services/AuthService";
 import { AccountService } from "../services/AccountService";
 import { AccountFlags } from "../services/AccountFlags";

@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import compress from "compression";
 import responseTime from "response-time";
 import ConfigManager from "../misc/ConfigManager";
-import Logger, { LogLevel } from "../misc/Logger";
+import Logger, { LogLevel } from "cinerama-common/lib/misc/Logger";
 import AuthResource from "./resources/AuthResource";
 import { AuthService } from "./services/AuthService";
 import { AccountService } from "./services/AccountService";

@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { ConfigKeys } from "./ConfigKeys";
-import Logger, { LogLevel } from "./Logger";
+import Logger, { LogLevel } from "cinerama-common/lib/misc/Logger";
 
 const writeLine = Logger.generateLogger("ConfigManager");
 

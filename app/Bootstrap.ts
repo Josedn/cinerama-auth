@@ -1,4 +1,4 @@
-import Logger, { LogLevel } from "./misc/Logger";
+import Logger, { LogLevel } from "cinerama-common/lib/misc/Logger";
 import ConfigManager from "./misc/ConfigManager";
 import Core from "./core/Core";
 
