@@ -6,7 +6,7 @@ export class SecretApiKeyService {
   constructor(private enabledKeys: string[]) {}
 
   private keyHasRights(apiKey: string) {
-    if (this.enabledKeys.find((acc) => acc == apiKey)) {
+    if (this.enabledKeys.find(acc => acc == apiKey)) {
       return true;
     }
     return false;

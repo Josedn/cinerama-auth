@@ -11,7 +11,7 @@ export class AccountService {
   constructor(private enabledAccounts: string[]) {}
 
   private accountHasFlag(token: string, flag: AccountFlags) {
-    if (this.enabledAccounts.find((acc) => acc == token)) {
+    if (this.enabledAccounts.find(acc => acc == token)) {
       return true;
     }
     return false;

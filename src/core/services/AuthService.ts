@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   private static serializeFlags(accountFlags: AccountFlags[]): string[] {
-    return accountFlags.map((accountFlag) => AccountFlags[accountFlag]);
+    return accountFlags.map(accountFlag => AccountFlags[accountFlag]);
   }
 
   public async fetchUser(accountToken: string): Promise<EitherType<CineError, User>> {
@@ -53,7 +53,7 @@ export class AuthService {
         AccountFlags.DOWNLOAD_STREAM,
         AccountFlags.GET_ALL_STREAMS,
         AccountFlags.GET_STREAM,
-      ]
+      ],
     });
   }
 

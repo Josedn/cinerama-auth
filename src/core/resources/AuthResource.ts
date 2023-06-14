@@ -26,11 +26,11 @@ export default class AuthResource {
 
     this.authService
       .login(username, password)
-      .then((either) => either.toPromise())
-      .then((authTokenE) => {
+      .then(either => either.toPromise())
+      .then(authTokenE => {
         res.status(HttpConstants.HTTP_STATUS_CREATED).json(authTokenE);
       })
-      .catch((err) => this.sendError(res, err));
+      .catch(err => this.sendError(res, err));
   };
 
   private fetchUser = (req: Request, res: Response, next: NextFunction): void => {
@@ -43,7 +43,7 @@ export default class AuthResource {
       .then(allowedFlags => {
         res.json(allowedFlags);
       })
-      .catch((err) => this.sendError(res, err));
+      .catch(err => this.sendError(res, err));
   };
 
   private verifyAccount = (req: Request, res: Response, next: NextFunction): void => {
@@ -60,7 +60,7 @@ export default class AuthResource {
       .then(allowedFlags => {
         res.json(allowedFlags);
       })
-      .catch((err) => this.sendError(res, err));
+      .catch(err => this.sendError(res, err));
   };
 
   private get404 = (req: Request, res: Response, next: NextFunction): void => {

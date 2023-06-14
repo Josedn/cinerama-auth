@@ -54,7 +54,7 @@ export default class Core {
     return new Promise((resolve, reject) => {
       this.app
         .listen(apiPort)
-        .on("error", (err) => {
+        .on("error", err => {
           reject(err);
         })
         .on("listening", () => {

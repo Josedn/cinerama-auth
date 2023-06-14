@@ -19,7 +19,7 @@ export default class ConfigManager {
   public getEnabledAccounts(): string[] {
     return this.getString(ConfigKeys.ENABLED_ACCOUNTS, "")
       .split(",")
-      .map((str) => str.trim());
+      .map(str => str.trim());
   }
 
   private static getKeyString(key: ConfigKeys): string {
