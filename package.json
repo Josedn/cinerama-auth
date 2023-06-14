@@ -19,7 +19,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "babel-jest": "^26.6.3",
-    "cinerama-common": "github:josedn/cinerama-common#bcc434fc9bd1edea9dcaca26b7ca6e4d34607130",
+    "cinerama-common": "github:josedn/cinerama-common#633056d7e8bffeccdcde938a590ad63773edfac5",
     "compression": "^1.7.4",
     "dotenv": "^8.2.0",
     "express": "^4.18.1",

@@ -6,23 +6,23 @@ import ConfigManager from "../misc/ConfigManager";
 import Logger, { LogLevel } from "cinerama-common/lib/misc/Logger";
 import AuthResource from "./resources/AuthResource";
 import { AuthService } from "./services/AuthService";
-import { AccountService } from "./services/AccountService";
+import { SecretApiKeyService } from "./services/SecretApiKeyService";
 
 const writeLine = Logger.generateLogger("Core");
 
 export default class Core {
   private app: Express.Application;
   private authService: AuthService;
-  private accountService: AccountService;
+  private secretApiKeyService: SecretApiKeyService;
 
   constructor(private configManager: ConfigManager) {
     this.app = Express();
     this.authService = new AuthService();
-    this.accountService = new AccountService(this.configManager.getEnabledAccounts());
+    this.secretApiKeyService = new SecretApiKeyService(this.configManager.getEnabledAccounts());
   }
 
   public async initialize(): Promise<void> {
-    const defaultResource = new AuthResource(this.authService, this.accountService);
+    const defaultResource = new AuthResource(this.authService, this.secretApiKeyService);
     await this.initializeExpress(this.configManager.getApiPort());
     defaultResource.initialize(this.app);
   }

@@ -4,17 +4,18 @@ import { constants as HttpConstants } from "http2";
 import Logger from "cinerama-common/lib/misc/Logger";
 import { writeLineWithRequest } from "cinerama-common/lib/misc/Utils";
 import { AuthService } from "../services/AuthService";
-import { AccountService } from "../services/AccountService";
-import { CineError, AccountFlags } from "cinerama-common/lib/protocol";
+import { CineError } from "cinerama-common/lib/protocol";
+import { SecretApiKeyService } from "../services/SecretApiKeyService";
 
-const writeLine = Logger.generateLogger("LightsResource");
+const writeLine = Logger.generateLogger("AuthResource");
 
 export default class AuthResource {
-  constructor(private authService: AuthService, private accountService: AccountService) {}
+  constructor(private authService: AuthService, private secretApiKeyService: SecretApiKeyService) {}
 
   public initialize(app: Application): void {
     app.post("/login", this.postLogin);
     app.get("/verify/:token", this.verifyAccount);
+    app.get("/user/:token", this.fetchUser);
     app.get("*", this.get404);
   }
 
@@ -32,8 +33,21 @@ export default class AuthResource {
       .catch((err) => this.sendError(res, err));
   };
 
+  private fetchUser = (req: Request, res: Response, next: NextFunction): void => {
+    const { token } = req.params;
+    writeLineWithRequest("Requested fetch user from " + token, req, writeLine);
+
+    this.authService
+      .fetchUser(token)
+      .then(either => either.toPromise())
+      .then(allowedFlags => {
+        res.json(allowedFlags);
+      })
+      .catch((err) => this.sendError(res, err));
+  };
+
   private verifyAccount = (req: Request, res: Response, next: NextFunction): void => {
-    if (!this.accountService.requestHasFlag(req, AccountFlags.GET_ALL_STREAMS)) {
+    if (!this.secretApiKeyService.requestHasRights(req)) {
       this.sendError(res, CineError.NOT_AUTHORIZED);
       return;
     }
@@ -42,9 +56,9 @@ export default class AuthResource {
 
     this.authService
       .verify(token)
-      .then((either) => either.toPromise())
-      .then((allowedFlags) => {
-        res.status(HttpConstants.HTTP_STATUS_CREATED).json(allowedFlags);
+      .then(either => either.toPromise())
+      .then(allowedFlags => {
+        res.json(allowedFlags);
       })
       .catch((err) => this.sendError(res, err));
   };

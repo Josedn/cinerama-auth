@@ -2,6 +2,7 @@ import { Either as EitherType } from "jazzi/dist/Either/types";
 import { Either } from "jazzi";
 import { getRandomToken } from "cinerama-common/lib/misc/Utils";
 import { CineError, AccountFlags } from "cinerama-common/lib/protocol";
+import User from "../protocol/User";
 
 class TwoWayMap<K, V> {
   private map = new Map<K, V>();
@@ -37,6 +38,23 @@ export class AuthService {
 
   private static serializeFlags(accountFlags: AccountFlags[]): string[] {
     return accountFlags.map((accountFlag) => AccountFlags[accountFlag]);
+  }
+
+  public async fetchUser(accountToken: string): Promise<EitherType<CineError, User>> {
+    const username = this.dirtyDb.revGet(accountToken);
+    if (!username) {
+      return Either.Left(CineError.INVALID_CREDENTIALS);
+    }
+    return Either.Right({
+      username,
+      lastLogin: new Date(),
+      rights: [
+        AccountFlags.ADD_STREAM,
+        AccountFlags.DOWNLOAD_STREAM,
+        AccountFlags.GET_ALL_STREAMS,
+        AccountFlags.GET_STREAM,
+      ]
+    });
   }
 
   public verify(accountToken: string): Promise<EitherType<CineError, string[]>> {
